@@ -1,9 +1,11 @@
 package br.sscode.todomovies4.data.remote.api.movie
 
 import br.sscode.todomovies4.data.remote.api.APIClientKeys
-import br.sscode.todomovies4.data.remote.model.Movie
-import br.sscode.todomovies4.data.remote.model.SimilarMovie
+import br.sscode.todomovies4.data.remote.api.response.GenresResponse
+import br.sscode.todomovies4.data.remote.api.response.SimilarMovieResponse
+import br.sscode.todomovies4.data.model.Movie
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -32,5 +34,13 @@ interface MovieService {
         @Path("movieId") movieId: Int = 5,
         @Query("api_key") apiKey: String = APIClientKeys.API_KEY,
         @Query("language") language: String = APIClientKeys.LANGUAGE_DEFAULT,
-        @Query("page") page: Int = 1): Call<MutableList<SimilarMovie>>
+        @Query("page") page: Int = 1): Call<SimilarMovieResponse>
+
+    /**
+     *  Método usado para obter os filmes similares de um determinado Movie da API
+     * */
+    @GET("genre/movie/list")
+    fun getGenres(
+        @Query("api_key") apiKey: String = APIClientKeys.API_KEY,
+        @Query("language") language: String = APIClientKeys.LANGUAGE_DEFAULT): Call<GenresResponse>
 }

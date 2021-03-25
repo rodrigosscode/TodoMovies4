@@ -1,4 +1,4 @@
-package br.sscode.todomovies4.data.remote.model
+package br.sscode.todomovies4.data.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -8,8 +8,8 @@ import com.google.gson.annotations.SerializedName
 class Genre {
 
     @SerializedName("id")
-    private val id: Long? = 0
+    val id: Long? = 0
 
     @SerializedName("name")
-    private val name: String? = ""
+    val name: String? = ""
 }

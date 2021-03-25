@@ -1,4 +1,4 @@
-package br.sscode.todomovies4.data.remote.model
+package br.sscode.todomovies4.data.model
 
 import com.google.gson.annotations.SerializedName
 

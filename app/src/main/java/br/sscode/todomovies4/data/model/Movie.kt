@@ -1,6 +1,5 @@
-package br.sscode.todomovies4.data.remote.model
+package br.sscode.todomovies4.data.model
 
-import com.google.gson.annotations.JsonAdapter
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -10,6 +9,9 @@ open class Movie {
 
     @SerializedName("id")
     val id: Long? = 0
+
+    @SerializedName("title")
+    val title: String? = ""
 
     @SerializedName("poster_path")
     val posterPath: String? = ""
@@ -24,5 +26,7 @@ open class Movie {
     val releaseDate: String? = ""
 
     @SerializedName("genres")
-    val genres: MutableList<Genre>? = null
+    var genres: MutableList<Genre>? = null
+
+    var similarMovies: MutableList<SimilarMovie>? = null
 }

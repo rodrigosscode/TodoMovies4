@@ -11,7 +11,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="500dp"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
@@ -24,7 +24,8 @@
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:id="@+id/movieImage"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
                 android:src="@drawable/capa_filme_teste"
@@ -67,7 +68,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/title"
+                        android:id="@+id/movieTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -108,7 +109,7 @@
                             android:layout_marginEnd="10dp"/>
 
                         <TextView
-                            android:id="@+id/vote_count"
+                            android:id="@+id/movieVoteCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
@@ -130,7 +131,7 @@
                             android:layout_marginEnd="10dp"/>
 
                         <TextView
-                            android:id="@+id/popularity_views"
+                            android:id="@+id/moviePopularityViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
@@ -144,7 +145,7 @@
 
             <!-- LISTA DE FILMES SIMILARES -->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_similar_movies"
+                android:id="@+id/similarMovies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
