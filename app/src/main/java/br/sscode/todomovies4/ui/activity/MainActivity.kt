@@ -18,8 +18,10 @@ import br.sscode.todomovies4.ui.activity.adapter.AdapterSimilarMovie
 import br.sscode.todomovies4.ui.activity.base.MainContract
 import br.sscode.todomovies4.ui.activity.extension.getPopularityDescription
 import br.sscode.todomovies4.ui.activity.extension.getVoteCountDescription
+import br.sscode.todomovies4.ui.activity.extension.showDialogAlert
 import br.sscode.todomovies4.ui.activity.presenter.MainPresenter
 import br.sscode.todomovies4.ui.activity.util.LogConsts
+import br.sscode.todomovies4.ui.activity.util.NetworkUtils
 import br.sscode.todomovies4.ui.activity.util.ProgressBarHandler
 import com.bumptech.glide.Glide
 
@@ -94,14 +96,25 @@ class MainActivity : AppCompatActivity(), MainContract.View {
      * */
     override fun initActions() {
 
-        // Definimos a barra de progresso para a tela
-        handlerProgress = ProgressBarHandler(this)
+        // Se houver conexão com a rede
+        if(NetworkUtils.isOnline(this)) {
 
-        // Chamamos o método para obter o filme
-        presenter.getMovie()
+            // Definimos a barra de progresso para a tela
+            handlerProgress = ProgressBarHandler(this)
 
-        // Definimos o click da imagem
-        movieLike?.setOnClickListener { presenter.onClickLike() }
+            // Chamamos o método para obter o filme
+            presenter.getMovie()
+
+            // Definimos o click da imagem
+            movieLike?.setOnClickListener { presenter.onClickLike() }
+        } else {
+            // Exibimos um dialog de alerta sobre a conexão
+            showDialogAlert(LogConsts.LOG_ERRO, getString(R.string.nao_existe_conexao), getString(R.string.tentar_novamente))
+            { _, _ ->
+                // Definimos que o clique tenta realizar as ações novamente
+                initActions()
+            }
+        }
     }
 
     /**

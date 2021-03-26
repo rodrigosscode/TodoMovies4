@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TodoMovies4</string>
+
+    <!-- Textos para views -->
+    <string name="tentar_novamente">Tentar novamente</string>
+    <string name="nao_existe_conexao">Não existe conexão</string>
 </resources>
