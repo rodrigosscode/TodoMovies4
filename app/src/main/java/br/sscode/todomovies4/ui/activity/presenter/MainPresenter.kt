@@ -10,7 +10,7 @@ import br.sscode.todomovies4.ui.activity.base.MainContract
 import br.sscode.todomovies4.ui.activity.task.TaskGetGenres
 import br.sscode.todomovies4.ui.activity.task.TaskGetMovie
 import br.sscode.todomovies4.ui.activity.task.TaskGetSimilarMovies
-import java.lang.Exception
+import br.sscode.todomovies4.ui.activity.util.LogConsts
 
 /**
  *  Presenter da MainActivity contendo seus controlares, acessos
@@ -18,13 +18,22 @@ import java.lang.Exception
 class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter {
 
     private var movie: Movie? = null
+    private var likeMovie: Boolean = false
 
     /**
      *  Vinculamos a view e solicitamos os binds dos elementos
      * */
     override fun onAttach(view: MainContract.View) {
         super.onAttach(view)
+        onViewCreated()
+    }
+
+    /**
+     *  Ao solicitado pede a view para fazer o bind dos elementos e ações
+     * */
+    override fun onViewCreated() {
         this.view?.bindViews()
+        this.view?.initActions()
     }
 
     /**
@@ -32,6 +41,18 @@ class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter
      * */
     override fun getMovie() {
         TaskGetMovie(this).execute()
+    }
+
+    /**
+     *  Listener para OnClick Like do Movie
+     * */
+    override fun onClickLike() {
+
+        // Invertemos o valor de True -> False como um interruptor
+        likeMovie = !likeMovie
+
+        // Chamamos o metodo onLikeDeslikeMovie da View
+        this.view?.onLikeDeslikeMovie(likeMovie)
     }
 
     /**
@@ -108,7 +129,7 @@ class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter
                 }
             }
         } catch (exception: Exception) {
-            Log.e("ERRO", exception.message!!)
+            Log.e(LogConsts.LOG_ERRO, exception.message!!)
         }
     }
 
@@ -117,7 +138,6 @@ class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter
      *  consequentemente devemos obter os Genres por outra API e vincular pelo ID
      * */
     private fun bindsGenresToSimilarMovies(genres: MutableList<Genre>) {
-
         var genresToSimilar: MutableList<Genre>? = null
 
         // Aplicamos caso similarMovies não nulo

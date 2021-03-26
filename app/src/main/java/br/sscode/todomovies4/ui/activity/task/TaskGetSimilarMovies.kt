@@ -7,6 +7,7 @@ import br.sscode.todomovies4.data.remote.api.APIClient
 import br.sscode.todomovies4.data.remote.api.movie.MovieService
 import br.sscode.todomovies4.data.remote.api.response.SimilarMovieResponse
 import br.sscode.todomovies4.ui.activity.base.BaseContract
+import br.sscode.todomovies4.ui.activity.util.LogConsts
 
 /**
  *  Async task para obter os dados de Similar Movies
@@ -26,7 +27,7 @@ class TaskGetSimilarMovies<V : BaseContract.View>(
             // Pedimos para que a Origem execute o método para mostrar o dialogo
             context.showProgressDialog()
         } catch (exception: Exception) {
-            Log.e("ERRO", exception.message!!)
+            Log.e(LogConsts.LOG_ERRO, exception.message!!)
         }
     }
 
@@ -44,9 +45,8 @@ class TaskGetSimilarMovies<V : BaseContract.View>(
                 // definimos que ouve sucesso
                 result = true
             }
-
         } catch (exception: Exception) {
-            Log.e("ERRO", exception.message!!)
+            Log.e(LogConsts.LOG_ERRO, exception.message!!)
         }
 
         return result
@@ -59,10 +59,10 @@ class TaskGetSimilarMovies<V : BaseContract.View>(
             // Retornamos a quem chama os dados da task
             context.onReceiveData(this@TaskGetSimilarMovies::class.java, similarMovies, result!!)
 
-            // Pedimos para que a Origem execute o método para remover o dialogo
+            // Após todas as ações executadas solicitamos a nossa view para esconder o progress de andamento
             context.hideProgressDialog()
         } catch (exception: Exception) {
-            Log.e("ERRO", exception.message!!)
+            Log.e(LogConsts.LOG_ERRO, exception.message!!)
         }
     }
 }

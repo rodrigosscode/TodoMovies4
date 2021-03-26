@@ -8,6 +8,7 @@ import android.os.AsyncTask
 interface BaseContract {
     interface View {
         fun bindViews()
+        fun initActions()
     }
 
     interface Presenter<V : View> {

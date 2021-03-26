@@ -1,11 +1,10 @@
 package br.sscode.todomovies4.data.remote.api.movie
 
+import br.sscode.todomovies4.data.model.Movie
 import br.sscode.todomovies4.data.remote.api.APIClientKeys
 import br.sscode.todomovies4.data.remote.api.response.GenresResponse
 import br.sscode.todomovies4.data.remote.api.response.SimilarMovieResponse
-import br.sscode.todomovies4.data.model.Movie
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

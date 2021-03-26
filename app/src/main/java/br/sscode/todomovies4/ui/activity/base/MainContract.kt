@@ -10,9 +10,11 @@ interface MainContract {
         fun updateView(movie: Movie?)
         fun showProgressDialog()
         fun hideProgressDialog()
+        fun onLikeDeslikeMovie(liked: Boolean)
     }
 
     interface Presenter : BaseContract.Presenter<View> {
         fun getMovie()
+        fun onClickLike()
     }
 }

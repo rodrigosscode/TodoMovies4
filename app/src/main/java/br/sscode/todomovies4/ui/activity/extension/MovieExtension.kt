@@ -1,6 +1,7 @@
 package br.sscode.todomovies4.ui.activity.extension
 
 import br.sscode.todomovies4.data.model.Movie
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,12 +45,12 @@ fun Movie.getGenresDescription(): String {
         // Percorremos os Genres
         genres.forEach {    genre ->
             sbGenres.append(genre.name)
-            sbGenres.append(",")
+            sbGenres.append(", ")
         }
 
-        // Convertemos o StringBuilder e obtemos o Description dos Genres removendo a Ultima ","
+        // Convertemos o StringBuilder e obtemos o Description dos Genres removendo a Ultima ", "
         genresDescription = sbGenres.toString()
-        genresDescription  = genresDescription.substring(0, genresDescription.length-1)
+        genresDescription  = genresDescription.substring(0, genresDescription.length-2)
     }
 
     return genresDescription
@@ -60,41 +61,45 @@ fun Movie.getGenresDescription(): String {
  *  Ex: " 1.2K Likes "
  * */
 fun Movie.getVoteCountDescription(): String {
-    val voteCountDescription: String = ""
+    var voteCountDescription: String = ""
 
     // Se o movie tiver mais de 1000 likes
-    if(voteCount!! > 1000) {
-        voteCountDescription.plus(String.format("%02d", voteCount)).plus("K")
+    voteCountDescription = if(voteCount!! > 1000) {
+
+        // Definimos o separador no Likes Count pelo milhar (#.###)
+        voteCountDescription = String.format("%,d", voteCount)
+
+        // Formatamos o valor obtendo apenas os 3 primeiros digitos assim sendo (#.###) -> (#.#)
+        voteCountDescription = voteCountDescription.substring(0, 3)
+
+        // Adicionamos e Retornamos com K para representar o  milhar: (#.#) -> (#.#K)
+        voteCountDescription.plus("K")
     }
-    // Senão, só adicionamos a contagem
+    // Senão, só adicionamos a contagem (###)
     else {
         voteCountDescription.plus(voteCount)
     }
 
-    // Definimos Likes para completar a informação
-    voteCountDescription.plus(" Likes")
+    // Definimos Likes para completar a informação (#.#K) -> (#.#K Likes)
+    voteCountDescription = voteCountDescription.plus(" Likes")
 
     return voteCountDescription
 }
 
 /**
  *  Extension usada para obter os Popularity Views em String formatados
- *  Ex: " 1.2K Views "
+ *  Ex: " 1,2000 Views "
  * */
 fun Movie.getPopularityDescription(): String {
-    val popularityDescription: String = String.format("%.2f", popularity)
 
-    // Se o movie tiver mais de 1000 popularity view
-    if(popularity!! > 1000) {
-        popularityDescription.plus("K")
-    }
-    // Senão, só adicionamos a contagem
-    else {
-        popularityDescription.plus(popularity)
-    }
+    // Definimos o formato do numero para o "popularity"
+    val numberFormat = NumberFormat.getNumberInstance(Locale("pt", "BR"))
+
+    // Definimos a breve description com a "popularity" formatada no padrão brasileiro "###.###.###,00"
+    var popularityDescription: String = numberFormat.format(popularity)
 
     // Definimos Likes para completar a informação
-    popularityDescription.plus(" Views")
+    popularityDescription = popularityDescription.plus(" Views")
 
     return popularityDescription
 }
